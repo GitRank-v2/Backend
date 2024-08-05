@@ -1,0 +1,71 @@
+name: GitRank CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'core/**/*.kt'
+      - 'alert/**/*.kt'
+      - 'batch/**/*.kt'
+
+jobs:
+  core-ci:
+    if: ${{ contains(github.event.commits.*.modified, 'core/') || contains(github.event.commits.*.added, 'core/') || contains(github.event.commits.*.removed, 'core/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Core
+        working-directory: ./core
+        run: ./gradlew build
+
+      - name: Test Core
+        working-directory: ./core
+        run: ./gradlew test
+
+  alert-ci:
+    if: ${{ contains(github.event.commits.*.modified, 'alert/') || contains(github.event.commits.*.added, 'alert/') || contains(github.event.commits.*.removed, 'alert/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Alert
+        working-directory: ./alert
+        run: ./gradlew build
+
+      - name: Test Alert
+        working-directory: ./alert
+        run: ./gradlew test
+
+  batch-ci:
+    if: ${{ contains(github.event.commits.*.modified, 'batch/') || contains(github.event.commits.*.added, 'batch/') || contains(github.event.commits.*.removed, 'batch/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Batch
+        working-directory: ./batch
+        run: ./gradlew build
+
+      - name: Test Batch
+        working-directory: ./batch
+        run: ./gradlew test
