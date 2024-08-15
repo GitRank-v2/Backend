@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+    group:
+      dev: dev,env
+      prod: prod,env
+
+server:
+  servlet:
+    context-path: /api/v2
