@@ -48,7 +48,7 @@ class JwtProvider(
         refreshToken: String,
         userDetails: UserPrinciple,
     ) {
-        val id = UUID.fromString(userDetails.name)
+        val id = userDetails.name.toLong()
 
         memberRepository.updateRefreshToken(id, refreshToken)
     }

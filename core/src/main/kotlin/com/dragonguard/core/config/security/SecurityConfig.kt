@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.CorsUtils
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.HandlerExceptionResolver
 
@@ -29,12 +30,16 @@ class SecurityConfig(
     @Bean
     fun configure(http: HttpSecurity): SecurityFilterChain =
         http
+            .cors { it.configurationSource(corsConfigurationSource()) }
+            .csrf { it.disable() }
             .httpBasic {
                 it.disable()
             }.formLogin {
                 it.disable()
             }.authorizeHttpRequests {
                 it
+                    .requestMatchers(CorsUtils::isPreFlightRequest)
+                    .permitAll()
                     .requestMatchers("/oauth2/**", "/auth/**")
                     .permitAll()
                     .requestMatchers("/admin/**")

@@ -19,13 +19,13 @@ class JwtValidator(
     fun getAuthentication(accessToken: String): Authentication {
         val claims = getTokenBodyClaims(accessToken)
         val loginUser =
-            memberRepository.findByIdOrNull(extractUUID(claims))?.let {
+            memberRepository.findByIdOrNull(extractIdentifier(claims))?.let {
                 userPrincipleMapper.mapToLoginUser(it)
             }
         return UsernamePasswordAuthenticationToken(loginUser, CREDENTIAL, loginUser?.authorities)
     }
 
-    fun extractUUID(claims: Claims): Long = claims[ID, String::class.java].toLong()
+    fun extractIdentifier(claims: Claims): Long = claims[ID, String::class.java].toLong()
 
     fun getTokenBodyClaims(accessToken: String?): Claims =
         Jwts

@@ -9,6 +9,7 @@ import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import org.hibernate.annotations.SoftDelete
@@ -34,7 +35,7 @@ class Member(
         get() = _authStep.toSet()
 
     @CollectionTable
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private val _roles: MutableList<Role> = mutableListOf(Role.ROLE_USER)
     val roles: List<Role>
