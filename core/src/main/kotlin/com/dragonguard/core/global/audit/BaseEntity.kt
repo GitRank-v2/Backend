@@ -20,7 +20,7 @@ import java.util.*
 abstract class BaseEntity : Persistable<Long> {
     @Id
     @GeneratedValue
-    private val id: Long? = null
+    private var id: Long? = null
 
     @CreatedDate
     @Column(updatable = false)
@@ -30,13 +30,13 @@ abstract class BaseEntity : Persistable<Long> {
     var updatedAt: LocalDateTime = LocalDateTime.now()
 
     @Transient
-    private var _isNew: Boolean = true
-    val isNew: Boolean
-        get() = _isNew
+    private var _isNewEntity: Boolean = true
+    val isNewEntity: Boolean
+        get() = _isNewEntity
 
     override fun getId(): Long? = id
 
-    override fun isNew(): Boolean = _isNew
+    override fun isNew(): Boolean = _isNewEntity
 
     override fun equals(other: Any?): Boolean {
         if (other == null) {
@@ -62,6 +62,6 @@ abstract class BaseEntity : Persistable<Long> {
     @PostPersist
     @PostLoad
     protected fun load() {
-        _isNew = false
+        _isNewEntity = false
     }
 }

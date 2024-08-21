@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-tier
+    depends_on:
+      - db
+    env_file: .env
+    restart: always
+    tty: true
+
+  db:
+    image: mysql
+    container_name: db
+    ports:
+      - "3306:3306"
+    env_file: .env
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - app-tier
+    restart: always
+
+networks:
+  app-tier:
+    driver: bridge

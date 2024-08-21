@@ -19,7 +19,7 @@ class GitOrg(
         organize(member)
     }
 
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "gitOrg")
+    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], mappedBy = "gitOrg")
     val gitOrgMembers: MutableList<GitOrgMember> = mutableListOf()
 
     private fun organize(member: Member) {
