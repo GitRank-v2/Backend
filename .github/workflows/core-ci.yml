@@ -23,9 +23,9 @@ jobs:
       - name: Set ENV
         run: |
             mkdir -p core/src/main/resources
-            echo "${{ secrets.ENV_YML }}" | base64 --decode > core/src/main/resources/env.yml
+            echo "${{ secrets.ENV_YML }}" | base64 --decode > core/src/main/resources/application-env.yml
             mkdir -p core/src/test/resources
-            echo "${{ secrets.ENV_YML }}" | base64 --decode > core/src/test/resources/env.yml
+            echo "${{ secrets.ENV_YML }}" | base64 --decode > core/src/test/resources/application-env.yml
 
       - name: Build Core
         working-directory: ./core
