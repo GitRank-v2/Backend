@@ -24,4 +24,7 @@ jobs:
     
       - name: Deploy to GCE with Docker Compose
         run: |
-          gcloud compute ssh gitrank --zone=${{ secrets.GCP_ZONE }} --command="cd ~/Backend && sudo git pull && cd core && sudo docker-compose down && sudo docker-compose up --build -d"
+          gcloud compute ssh gitrank --zone=${{ secrets.GCP_ZONE }} --command="
+            cd ~/Backend && git config --global --add safe.directory /home/runner/Backend && sudo git pull 
+            && cd core && sudo docker-compose down && sudo docker-compose up --build -d"
+            
