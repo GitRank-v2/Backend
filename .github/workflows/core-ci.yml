@@ -19,6 +19,13 @@ jobs:
         with:
           java-version: '17'
 
+      - name: Set ENV
+        run: |
+            mkdir -p src/main/resources
+            echo "${{ secrets.ENV_YML }}" | base64 --decode > src/main/resources/env.yml
+            mkdir -p src/test/resources
+            echo "${{ secrets.ENV_YML }}" | base64 --decode > src/test/resources/env.yml
+
       - name: Build Core
         working-directory: ./core
         run: ./gradlew build
