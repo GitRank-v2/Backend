@@ -1,0 +1,28 @@
+name: Core CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'core/**/*.kt'
+
+jobs:
+  core-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Core
+        working-directory: ./core
+        run: ./gradlew build
+
+      - name: Test Core
+        working-directory: ./core
+        run: ./gradlew test
