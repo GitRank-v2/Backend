@@ -28,7 +28,7 @@ class MemberService(
         }
 
         val member: Member =
-            memberRepository.findByGithubId(githubId) ?: throw EntityNotFoundException()
+            getEntityByGithubId(githubId)
 
         if (member.hasNoAuthStep()) {
             member.join(name, profileImage)
@@ -36,4 +36,6 @@ class MemberService(
         member.updateGithubToken(userRequest.accessToken.tokenValue)
         return member
     }
+
+    private fun getEntityByGithubId(githubId: String) = memberRepository.findByGithubId(githubId) ?: throw EntityNotFoundException()
 }
